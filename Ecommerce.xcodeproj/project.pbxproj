@@ -25,6 +25,7 @@
 		6A8D641624EAAF3000E087EC /* CategoryViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A8D641524EAAF3000E087EC /* CategoryViewController.storyboard */; };
 		6A8D641824EAAFB500E087EC /* ProductViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A8D641724EAAFB500E087EC /* ProductViewController.storyboard */; };
 		6A943EC024EAEAA600EE52D4 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A943EBF24EAEAA600EE52D4 /* CategoryPresenter.swift */; };
+		6A943EC324EAF5EE00EE52D4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A943EC224EAF5EE00EE52D4 /* LoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		6A8D641524EAAF3000E087EC /* CategoryViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategoryViewController.storyboard; sourceTree = "<group>"; };
 		6A8D641724EAAFB500E087EC /* ProductViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProductViewController.storyboard; sourceTree = "<group>"; };
 		6A943EBF24EAEAA600EE52D4 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
+		6A943EC224EAF5EE00EE52D4 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 		6A8D63D324EA9F7500E087EC /* Ecommerce */ = {
 			isa = PBXGroup;
 			children = (
+				6A943EC124EAF5DC00EE52D4 /* Utility */,
 				6A80016124EACF9E009A372E /* Network */,
 				6A8D641424EAABA700E087EC /* Extension */,
 				6A8D640924EAA49F00E087EC /* Category */,
@@ -196,6 +199,14 @@
 				6A8D641224EAAB9800E087EC /* StoryBoardExtension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		6A943EC124EAF5DC00EE52D4 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				6A943EC224EAF5EE00EE52D4 /* LoadingView.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +350,7 @@
 				6A8D63D524EA9F7500E087EC /* AppDelegate.swift in Sources */,
 				6A8D640D24EAA4DF00E087EC /* ProductViewController.swift in Sources */,
 				6A80016324EAD743009A372E /* Category.swift in Sources */,
+				6A943EC324EAF5EE00EE52D4 /* LoadingView.swift in Sources */,
 				6A8D640F24EAA68000E087EC /* CategoryCoordinator.swift in Sources */,
 				6A8D640824EAA3D500E087EC /* Coordinator.swift in Sources */,
 				6A8D641124EAA7C200E087EC /* ProductCoordinator.swift in Sources */,
@@ -509,6 +521,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BF6G36ZCBW;
 				INFOPLIST_FILE = Ecommerce/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -527,6 +540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BF6G36ZCBW;
 				INFOPLIST_FILE = Ecommerce/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

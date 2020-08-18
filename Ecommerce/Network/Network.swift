@@ -7,14 +7,14 @@
 //
 
 import Foundation
-let baseURL = URL(string: "​https://stark-spire-93433.herokuapp.com​/")!
 
-protocol Fetchable: Decodable {
+protocol Fetchable {
     static var apiBase: String { get }
 }
 
 struct Client {
     let session: URLSession
+    let baseURL = URL(string: Constants.baseURLString ?? "")!
     init(session: URLSession) {
         self.session = session
     }
@@ -22,19 +22,25 @@ struct Client {
 
 extension Client {
     
-    func fetch<Model: Fetchable>(
+    func fetch<Model: Fetchable & JSONINitializer>(
         _: Model.Type,
         completion: @escaping (Result<Model, Error>) -> Void)
     {
-        let urlRequest = URLRequest(url: baseURL
-            .appendingPathComponent(Model.apiBase))
+        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(Model.apiBase))
+        urlRequest.httpMethod = "GET"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        session.dataTask(with: urlRequest) { (data, _, error) in
+        session.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error { completion(.failure(error)) }
-            else if let data = data,let model = try? JSONDecoder().decode(Model.self,from: data){
-                completion(.success(model))
-            }else {
+            else if let data = data{
+                if let json = (try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])) as? [String:AnyObject] {
+                    // try to read out a string array
+                    completion(.success(Model.init(json)))
+                }
                 let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: "Parsing Error"]) as Error
+                completion(.failure(error))
+            }else {
+                let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: "Unknown Error"]) as Error
                 completion(.failure(error))
             }
         }.resume()
@@ -42,7 +48,15 @@ extension Client {
 }
 
 extension Category: Fetchable {
-    static var apiBase: String { return "json" }
+    static var apiBase: String { return "b/5f3b6155b88c04101cf62ba5" }
+}
+
+protocol JSONINitializer {
+    init(_ json:Dictionary<String, Any>)
+}
+
+extension Category: JSONINitializer{
+    
 }
 
 

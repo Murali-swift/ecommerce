@@ -16,22 +16,29 @@ class  CategoryInteractor: CategoryInteractorProtocol {
 
     func fetchCategory() {
         let categoryWorker = CategoryWorker.init()
-        categoryWorker.fetch(completion:{ result in
+        presenter?.showLoading()
+        categoryWorker.fetch(completion:{ [weak self] result in
+            self?.presenter?.stopLoading()
             switch result {
             case .failure( let error):
                 print(error.localizedDescription)
+                self?.presenter?.showError(error)
             case .success(let category):
                 print(category)
+                self?.presenter?.updateCategory(category)
             }
         })
     }
 }
 
 protocol workerProtocol {
-    func fetch(completion:@escaping (Result<Category, Error>) -> Void)
+    associatedtype Model
+    func fetch(completion:@escaping (Result<Model, Error>) -> Void)
 }
 
 class CategoryWorker: workerProtocol{
+    typealias Model = Category
+    
     func fetch(completion:@escaping (Result<Category, Error>) -> Void) {
         let client = Client(session: URLSession.shared)
         client.fetch(Category.self) { (result) in

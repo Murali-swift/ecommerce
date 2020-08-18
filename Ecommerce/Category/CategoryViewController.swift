@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Constants {
+    static let loadingViewTag = 100
+    static let baseURLString = "https://api.jsonbin.io"
+}
+
 protocol DisplayLogicProtocol: class{
     func displayError(message: Error)
     func displayLoading()
@@ -16,6 +21,31 @@ protocol DisplayLogicProtocol: class{
 
 protocol CategoryDisplayProtocol: DisplayLogicProtocol{
     func displayContent(message: Category)
+}
+
+extension DisplayLogicProtocol where Self: UIViewController {
+    func displayLoading() {
+        let loadingView = LoadingView()
+        view.addSubview(loadingView)
+        
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.animate()
+        loadingView.tag = Constants.loadingViewTag
+    }
+    
+    func removeLoading() {
+        DispatchQueue.main.async { [weak self] in
+            self?.view.subviews.forEach { subview in
+                if subview.tag == Constants.loadingViewTag {
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+    }
 }
 
 class CategoryViewController: UIViewController {
@@ -28,6 +58,7 @@ class CategoryViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setup()
+        loadCategory()
     }
     
     
@@ -39,7 +70,10 @@ class CategoryViewController: UIViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
     }
-
+    
+    private func loadCategory(){
+        interactor?.fetchCategory()
+    }
     /*
     // MARK: - Navigation
 
@@ -60,14 +94,4 @@ extension CategoryViewController: CategoryDisplayProtocol {
     func displayError(message: Error) {
         
     }
-    
-    func displayLoading() {
-        
-    }
-    
-    func removeLoading() {
-        
-    }
-    
-    
 }
