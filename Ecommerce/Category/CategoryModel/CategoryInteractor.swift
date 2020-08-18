@@ -15,7 +15,7 @@ class  CategoryInteractor: CategoryInteractorProtocol {
     var presenter: CategoryPresenterProtocol?
 
     func fetchCategory() {
-        let categoryWorker = CategoryWorker.init()
+        let categoryWorker = CategoryWorker.init(persistance: PersistenceStorageManager.shared)
         presenter?.showLoading()
         categoryWorker.fetch(completion:{ [weak self] result in
             self?.presenter?.stopLoading()
@@ -25,7 +25,9 @@ class  CategoryInteractor: CategoryInteractorProtocol {
                 self?.presenter?.showError(error)
             case .success(let category):
                 print(category)
-                self?.presenter?.updateCategory(category)
+                if let categories = try?  PersistenceStorageManager.shared.context.fetch(Category.fetchRequest()) as? [Category] {
+                    self?.presenter?.updateCategory(categories)
+                }
             }
         })
     }
@@ -33,15 +35,21 @@ class  CategoryInteractor: CategoryInteractorProtocol {
 
 protocol workerProtocol {
     associatedtype Model
+    var persistanceManager: StoreDataLocally { get set }
     func fetch(completion:@escaping (Result<Model, Error>) -> Void)
 }
 
 class CategoryWorker: workerProtocol{
-    typealias Model = Category
+    var persistanceManager: StoreDataLocally
+    typealias Model = Categories
     
-    func fetch(completion:@escaping (Result<Category, Error>) -> Void) {
+    init(persistance: StoreDataLocally) {
+        persistanceManager = persistance
+    }
+
+    func fetch(completion:@escaping (Result<Categories, Error>) -> Void) {
         let client = Client(session: URLSession.shared)
-        client.fetch(Category.self) { (result) in
+        client.fetch(Categories.self, persistent:persistanceManager) { (result) in
             completion(result)
         }
     }

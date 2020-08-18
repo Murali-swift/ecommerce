@@ -15,15 +15,15 @@ protocol Presenter: class {
 }
 
 protocol CategoryPresenterProtocol:Presenter {
-    func updateCategory(_ category:Category)
+    func updateCategory(_ categories:[Category])
 }
 
 
 class CategoryPresenter:CategoryPresenterProtocol {
     weak var viewController: CategoryDisplayProtocol?
 
-    func updateCategory(_ category: Category) {
-        viewController?.displayContent(message: category)
+    func updateCategory(_ categories: [Category]) {
+        viewController?.displayContent(categories: categories)
     }
     
     func showError(_ error: Error) {

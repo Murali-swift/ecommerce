@@ -20,7 +20,7 @@ protocol DisplayLogicProtocol: class{
 }
 
 protocol CategoryDisplayProtocol: DisplayLogicProtocol{
-    func displayContent(message: Category)
+    func displayContent(categories: [Category])
 }
 
 extension DisplayLogicProtocol where Self: UIViewController {
@@ -87,7 +87,7 @@ class CategoryViewController: UIViewController {
 }
 
 extension CategoryViewController: CategoryDisplayProtocol {
-    func displayContent(message: Category) {
+    func displayContent(categories: [Category]) {
         
     }
     

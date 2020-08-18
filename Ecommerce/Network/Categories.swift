@@ -8,18 +8,18 @@
 
 import Foundation
 
-
-struct Category {
-    var category: [CategorySub] = []
-    var rankings: [Rankings] = []
+struct Categories {
+   private var category: [CategorySub] = []
+   private var rankings: [Rankings] = []
     
-    init(_ json:Dictionary<String, Any>) {
+    init(_ json:Dictionary<String, Any>,_ storage: StoreDataLocally) {
         var array = [json["categories"]]
         for case let value as Array<Any> in array {
             category =  value.map { (item) -> CategorySub  in
                 CategorySub.init((item as? Dictionary<String, Any>)!)
             }
         }
+        storage.storeCategory(category)
         
         array = [json["rankings"]]
         for case let value as Array<Any> in array {
@@ -27,40 +27,14 @@ struct Category {
                 Rankings.init((item as? Dictionary<String, Any>)!)
             }
         }
-    }
-}
-
-struct Rankings {
-    let ranking: String?
-    var products: [SubProduct] = []
-    init (_ json: Dictionary<String, Any>) {
-        ranking = json["ranking"] as? String
-        let array = [json["products"]]
-        for case let value as Array<Any> in array {
-            products = value.map { (item) -> SubProduct  in
-                SubProduct.init((item as? Dictionary<String, Any>)!)
-            }
-        }
-    }
-    
-    struct SubProduct {
-        let id: Int?
-        let order_count: Int?
-        let view_count: Int?
-        let shares: Int?
-        init(_ json:Dictionary<String, Any>) {
-            id = json["id"] as? Int
-            order_count = json["order_count"] as? Int
-            view_count = json["view_count"] as? Int
-            shares = json["shares"] as? Int
-        }
+        storage.storeRanking(rankings)
     }
 }
 
 struct CategorySub {
     var id: Int?
     var name: String?
-    var products: [Products] = []
+    var productList: [AllProducts] = []
     var child_categories: [Int] = []
     
     init (_ json: Dictionary<String, Any>) {
@@ -69,11 +43,11 @@ struct CategorySub {
         
         let array = [json["products"]]
         for case let value as Array<Any> in array {
-            products = value.map { (item) -> Products  in
-                Products.init((item as? Dictionary<String, Any>)!)
+            productList = value.map { (item) -> AllProducts  in
+                AllProducts.init((item as? Dictionary<String, Any>)!)
             }
         }
-        
+                
         let childArray = [json["child_categories"]]
         for case let value as Array<Any> in childArray {
             child_categories = value.map { (item) -> Int  in
@@ -82,12 +56,12 @@ struct CategorySub {
         }
     }
     
-    struct Products {
+    struct AllProducts {
         var id: Int?
         var name: String?
         var date_added: String?
         var variants: [Variants] = []
-        var tax: Tax?
+        var tax: Taxes?
         init(_ json:Dictionary<String, Any>) {
             id = json["id"] as? Int
             date_added = json["date_added"] as? String
@@ -101,8 +75,7 @@ struct CategorySub {
             }
             
             let taxed = [json["tax"]]
-            tax = Tax.init(taxed)
-
+            tax = Taxes.init(taxed)
         }
     }
     
@@ -119,7 +92,7 @@ struct CategorySub {
         }
     }
     
-    struct Tax  {
+    struct Taxes  {
         var name: String?
         var value: Float?
         init(_ json:Array<Any>) {

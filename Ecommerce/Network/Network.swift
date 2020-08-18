@@ -23,7 +23,7 @@ struct Client {
 extension Client {
     
     func fetch<Model: Fetchable & JSONINitializer>(
-        _: Model.Type,
+        _: Model.Type, persistent:StoreDataLocally,
         completion: @escaping (Result<Model, Error>) -> Void)
     {
         var urlRequest = URLRequest(url: baseURL.appendingPathComponent(Model.apiBase))
@@ -35,7 +35,8 @@ extension Client {
             else if let data = data{
                 if let json = (try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])) as? [String:AnyObject] {
                     // try to read out a string array
-                    completion(.success(Model.init(json)))
+                    
+                    completion(.success(Model.init(json,persistent)))
                 }
                 let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: "Parsing Error"]) as Error
                 completion(.failure(error))
@@ -47,15 +48,15 @@ extension Client {
     }
 }
 
-extension Category: Fetchable {
+extension Categories: Fetchable {
     static var apiBase: String { return "b/5f3b6155b88c04101cf62ba5" }
 }
 
 protocol JSONINitializer {
-    init(_ json:Dictionary<String, Any>)
+    init(_ json:Dictionary<String, Any>,_ persistent: StoreDataLocally)
 }
 
-extension Category: JSONINitializer{
+extension Categories: JSONINitializer{
     
 }
 
