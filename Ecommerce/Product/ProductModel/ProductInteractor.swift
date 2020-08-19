@@ -9,15 +9,31 @@
 import Foundation
 
 protocol ProductInteractorProtocol {
-    func fetchProductForCategory(id:Int64)
+    func fetchProductForCategory(id: Int64)
+    func fetchProductForCategory(id: Int64, filter:String?)
+    func titleForCategory(id:Int64)
 }
 
 class  ProductInteractor: ProductInteractorProtocol {
     var presenter: ProductPresenterProtocol?
 
-    func fetchProductForCategory(id: Int64) {
-        let products = LocalProductWorker(categoryID: id).fetch()
-        
+    func titleForCategory(id:Int64) {
+        presenter?.updateTitle(LocalProductWorker(categoryID: id).title())
     }
+    
+    func fetchProductForCategory(id: Int64) {
+        presenter?.updateProduct(LocalProductWorker(categoryID: id).fetch())
+    }
+    
+    func fetchProductForCategory(id: Int64, filter:String?) {
+        if filter?.isEmpty ?? true || filter == "All" {
+            self.fetchProductForCategory(id: id)
+        }else {
+            
+//            presenter?.updateProduct(products)
+        }
+    }
+    
+
     
 }

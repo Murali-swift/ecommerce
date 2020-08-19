@@ -16,9 +16,9 @@ protocol CategoryDisplayProtocol: DisplayLogicProtocol{
 class CategoryViewController: UIViewController {
     weak var coordinator: CategoryCoordinator?
     var interactor: CategoryInteractorProtocol?
+    private var categories: [Category] = []
 
     @IBOutlet weak var categoryTableView: UITableView!
-    private var categories: [Category] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +65,8 @@ class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        var value = categories[section].subCategories?.anyObject() as? 
+        
         return categories[section].subCategories?.count ?? 0
     }
     
@@ -100,7 +102,9 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.productDidSelected(categories[indexPath.row].id)
+        interactor?.fetchSubCategory(mainCategory: categories[indexPath.section], forIndexPath: indexPath, completion: { (subCategory) in
+            coordinator?.categoryDidSelected(subCategory!.id)
+        })
     }
 }
 

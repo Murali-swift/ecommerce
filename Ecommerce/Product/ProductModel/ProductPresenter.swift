@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol ProductPresenterProtocol:Presenter {
+protocol ProductPresenterProtocol:ErrorPresenter {
     func updateProduct(_ product:[Products])
-    
+    func updateTitle(_ title:String)
 }
 
 
@@ -21,15 +21,12 @@ class ProductPresenter:ProductPresenterProtocol {
         viewController?.displayContent(products: product)
     }
     
+    func updateTitle(_ title:String) {
+        viewController?.displayTitle(title)
+    }
+    
     func showError(_ error: Error) {
         viewController?.displayError(message: error)
     }
-    
-    func showLoading() {
-        viewController?.displayLoading()
-    }
-    
-    func stopLoading() {
-        viewController?.removeLoading()
-    }
+
 }

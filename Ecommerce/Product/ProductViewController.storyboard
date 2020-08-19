@@ -14,9 +14,69 @@
                     <view key="view" contentMode="scaleToFill" id="MuR-NW-2N6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="B3Q-2A-aOZ">
+                                <rect key="frame" x="0.0" y="69" width="414" height="48"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T0K-ci-elz">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="XP1-1A-bNG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="◀︎">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="back:" destination="EzR-FU-AhU" eventType="touchUpInside" id="5o4-dU-rk2"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRODUCTS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8I-JV-4sn">
+                                        <rect key="frame" x="85" y="14" width="244" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPU-nY-HMm">
+                                        <rect key="frame" x="334" y="7.5" width="80" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="WxZ-A7-D0o"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="FILTER ▽">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zbl-Eg-kgu">
+                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m02-Jd-guf">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="B3Q-2A-aOZ" firstAttribute="leading" secondItem="ej9-o1-a5T" secondAttribute="leading" id="A7X-gT-GFT"/>
+                            <constraint firstItem="ej9-o1-a5T" firstAttribute="trailing" secondItem="Zbl-Eg-kgu" secondAttribute="trailing" id="KYb-IG-TRv"/>
+                            <constraint firstItem="B3Q-2A-aOZ" firstAttribute="top" secondItem="ej9-o1-a5T" secondAttribute="top" constant="25" id="QsV-Q6-cC7"/>
+                            <constraint firstItem="Zbl-Eg-kgu" firstAttribute="top" secondItem="B3Q-2A-aOZ" secondAttribute="bottom" constant="15" id="Xfw-gX-YZX"/>
+                            <constraint firstItem="ej9-o1-a5T" firstAttribute="trailing" secondItem="B3Q-2A-aOZ" secondAttribute="trailing" id="nOn-t9-jcq"/>
+                            <constraint firstItem="Zbl-Eg-kgu" firstAttribute="leading" secondItem="ej9-o1-a5T" secondAttribute="leading" id="nYD-za-93O"/>
+                            <constraint firstItem="ej9-o1-a5T" firstAttribute="bottom" secondItem="Zbl-Eg-kgu" secondAttribute="bottom" id="qtF-DG-Hh3"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="ej9-o1-a5T"/>
                     </view>
+                    <connections>
+                        <outlet property="productCollectionView" destination="Zbl-Eg-kgu" id="pvl-gg-CqK"/>
+                        <outlet property="titleLabel" destination="a8I-JV-4sn" id="tUW-Th-hdf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CCz-3M-4DO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

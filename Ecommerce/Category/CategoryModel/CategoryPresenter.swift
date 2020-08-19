@@ -8,11 +8,16 @@
 
 import Foundation
 
-protocol Presenter: class {
+protocol ErrorPresenter: class {
     func showError(_ error:Error)
+}
+
+protocol LoaderPresenter {
     func showLoading()
     func stopLoading()
 }
+
+typealias Presenter = ErrorPresenter & LoaderPresenter
 
 protocol CategoryPresenterProtocol:Presenter {
     func updateCategory(_ categories:[Category])

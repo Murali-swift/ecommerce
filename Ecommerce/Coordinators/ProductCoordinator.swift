@@ -6,9 +6,12 @@
 //  Copyright © 2020 Murali. All rights reserved.
 //
 import UIKit
-
+protocol ProductCoordinatorDelegate: AnyObject {
+    func productCoordinatorDidSelected(id:Int64,coordinator: ProductCoordinator)
+}
 
 class ProductCoordinator: Coordinator {
+    weak var delegate: ProductCoordinatorDelegate?
     weak var parentCoordinator: MainCoordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
@@ -26,7 +29,14 @@ class ProductCoordinator: Coordinator {
 
     func start() {
         productViewController.coordinator = self
+        productViewController.categoryID = categoryID
         navigationController.pushViewController(productViewController, animated: true)
 //        navigationController.setViewControllers([productViewController], animated: false)
+    }
+}
+
+extension ProductCoordinator {
+    func productDidSelected (_ forProductID:Int64){
+        delegate?.productCoordinatorDidSelected(id: forProductID, coordinator: self)
     }
 }

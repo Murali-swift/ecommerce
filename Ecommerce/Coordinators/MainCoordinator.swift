@@ -77,11 +77,25 @@ extension MainCoordinator {
         productoordinator.start()
         childCoordinators.append(productoordinator)
     }
+    
+    fileprivate func showProductDetail(_ id: Int64) {
+        let productoordinator = ProductCoordinator(categoryID: id, navigationController: navigationController)
+        productoordinator.parentCoordinator = self
+        productoordinator.start()
+        childCoordinators.append(productoordinator)
+    }
 }
 
 // MARK: - Delegate Authentication Coordinator
 extension MainCoordinator: CategoryCoordinatorDelegate {
-    func ProductCoordinatorDidSelected(id: Int64, coordinator: CategoryCoordinator) {
+    func categoryCoordinatorDidSelected(id: Int64, coordinator: CategoryCoordinator) {
        showProductList(id)
+    }
+}
+
+
+extension MainCoordinator: ProductCoordinatorDelegate {
+    func productCoordinatorDidSelected(id: Int64, coordinator: ProductCoordinator) {
+        showProductDetail(id)
     }
 }

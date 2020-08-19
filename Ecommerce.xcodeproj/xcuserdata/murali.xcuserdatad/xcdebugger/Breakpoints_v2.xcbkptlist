@@ -16,5 +16,53 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "49DC5818-7100-41DD-84AA-6FEE4042CFD0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ecommerce/LocalStoragee/PersistentStorageManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "storeCategory(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "49DC5818-7100-41DD-84AA-6FEE4042CFD0 - b4051fe1bd2e904"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Ecommerce.PersistenceStorageManager.storeCategory(Swift.Array&lt;Ecommerce.CategorySub&gt;) -&gt; ()"
+                  moduleName = "Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murali/Desktop/EcommerceHeady/Ecommerce/Ecommerce/LocalStoragee/PersistentStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "6602">
+               </Location>
+               <Location
+                  uuid = "49DC5818-7100-41DD-84AA-6FEE4042CFD0 - 7e8d54d5be4f7724"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Ecommerce.ChildCategory) -&gt; Swift.Optional&lt;Any&gt; in Ecommerce.PersistenceStorageManager.storeCategory(Swift.Array&lt;Ecommerce.CategorySub&gt;) -&gt; ()"
+                  moduleName = "Ecommerce"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murali/Desktop/EcommerceHeady/Ecommerce/Ecommerce/LocalStoragee/PersistentStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

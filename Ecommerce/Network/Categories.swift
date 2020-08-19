@@ -114,7 +114,7 @@ struct CategorySub {
 
 
 extension Categories: Fetchable {
-    static var apiBase: String { return "b/5f3b6155b88c04101cf62ba5" }
+    static var apiBase: String { return Constants.extURLComponent }
 }
 
 extension Categories: JSONINitializer{

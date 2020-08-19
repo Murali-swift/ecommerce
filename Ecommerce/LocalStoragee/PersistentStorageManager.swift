@@ -51,30 +51,45 @@ extension PersistenceStorageManager:StoreDataLocally {
             let categories = Category(context: context)
             categories.id = Int64(categoryItem.id ?? 0)
             categories.name = categoryItem.name
+            var products: [Products] = []
             for productItem in categoryItem.productList {
                 let product = Products(context: context)
                 product.id = Int64(productItem.id ?? 0)
                 product.name = productItem.name
                 product.owner = categories
                 product.date_added = productItem.date_added
-                for varientItem in productItem.variants {
+
+                let variants =  productItem.variants.compactMap { (varientItem) -> Variants in
                     let variant = Variants(context: context)
                     variant.id = Int64(varientItem.id ?? 0)
                     variant.price = Int64(varientItem.price ?? 0)
                     variant.color = varientItem.color
                     variant.size = Int64(varientItem.size ?? 0)
-                    product.addToVariant(variant)
+                    return variant
                 }
+                if !variants.isEmpty {
+                    product.addToVariant(NSSet.init(array: variants))
+                }
+
                 let tax = Tax(context: context)
                 tax.name = productItem.tax?.name
                 tax.value = productItem.tax?.value ?? 0.0
                 product.tax = tax
-                categories.addToProducts(product)
+                products.append(product)
+//                categories.addToProducts(product)
             }
+            if !products.isEmpty {
+                categories.addToProducts(NSOrderedSet.init(array: products.compactMap({$0})))
+            }
+
+            var childs = [ChildCategory]()
             for id in categoryItem.child_categories {
                 let child = ChildCategory(context: context)
                 child.ids = Int64(id)
-                categories.addToSubCategories(child)
+                childs.append(child)
+            }
+            if !childs.isEmpty {
+                categories.addToSubCategories(NSSet.init(array: childs.compactMap({$0})))
             }
         }
     }
@@ -83,25 +98,38 @@ extension PersistenceStorageManager:StoreDataLocally {
         for item in list {
             let rank = Ranking(context: context)
             rank.ranking = item.ranking
+            var orders = [ProductsOrderType]()
+            var shares = [ProductsShareType]()
+            var views = [ProductsViewType]()
+
             for subItem in item.products {
                 if let value = subItem.order_count {
                     let order = ProductsOrderType(context: context)
                     order.id = Int64(subItem.id ?? 0)
                     order.order_Count = Int64(value)
-                    rank.addToOrderType(order)
+                    orders.append(order)
                 }else if let value = subItem.shares {
                     let share = ProductsShareType (context: context)
                     share.id = Int64(subItem.id ?? 0)
                     share.view_count = Int64(value)
-                    rank.addToShareType(share)
+                    shares.append(share)
                 }else if let value = subItem.view_count {
                     let viewCount = ProductsViewType (context: context)
                     viewCount.id = Int64(subItem.id ?? 0)
                     viewCount.shares = Int64(value)
-                    rank.addToViewType(viewCount)
+                    views.append(viewCount)
                 }
             }
+            if !orders.isEmpty {
+                rank.addToOrderType(NSSet.init(array: orders))
+            }
+            if !shares.isEmpty {
+                rank.addToShareType(NSSet.init(array: shares))
+            }
+            if !views.isEmpty {
+                rank.addToViewType(NSSet.init(array: views))
+            }
         }
-//        try? context.save()
+
     }
 }

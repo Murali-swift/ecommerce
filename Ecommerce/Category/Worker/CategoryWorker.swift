@@ -39,7 +39,7 @@ protocol LocalCategoryFetcherProtocol {
 class LocalCategoryFetchWorker:LocalCategoryFetcherProtocol {
     func mainCategories()->[Category] {
         if let categories = try?  PersistenceStorageManager.shared.context.fetch(Category.fetchRequest()) as? [Category] {
-          return  categories.filter({$0.subCategories?.count ?? 0 > 0})
+            return  categories.filter({$0.subCategories?.allObjects.count ?? 0 > 0})
         }
         return []
     }
@@ -50,7 +50,7 @@ class LocalCategoryFetchWorker:LocalCategoryFetcherProtocol {
               let id = ids[forIndexPath.row].ids
               let categoryFetcher = NSFetchRequest<Category>(entityName: "Category")
               categoryFetcher.predicate = NSPredicate(format: "id == %d", id)
-              return try? PersistenceStorageManager.shared.context.fetch(categoryFetcher).first
+              return try? PersistenceStorageManager.shared.context.fetch(categoryFetcher).last
         }
         return nil
     }

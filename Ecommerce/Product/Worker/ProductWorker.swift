@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import CoreData
 
 protocol LocalProductFetcherProtocol {
     init(categoryID: Int64)
+    func fetch()->[Products] 
 }
 
 
@@ -21,6 +23,21 @@ class LocalProductWorker: LocalProductFetcherProtocol{
     }
     
     func fetch()->[Products] {
-        
+        let categoryFetcher = NSFetchRequest<Category>(entityName: "Category")
+        categoryFetcher.predicate = NSPredicate(format: "id == %d", productCategoryId)
+        if let category = try? PersistenceStorageManager.shared.context.fetch(categoryFetcher).last {
+            return category.products?.array as? [Products] ?? []
+        }
+    
+        return []
+    }
+    
+    func title() -> String {
+        let categoryFetcher = NSFetchRequest<Category>(entityName: "Category")
+        categoryFetcher.predicate = NSPredicate(format: "id == %d", productCategoryId)
+        if let category = try? PersistenceStorageManager.shared.context.fetch(categoryFetcher).last {
+            return category.name ?? ""
+        }
+        return ""
     }
 }
