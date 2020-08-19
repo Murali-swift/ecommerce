@@ -31,33 +31,23 @@ extension Client {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         session.dataTask(with: urlRequest) { (data, response, error) in
+            var genericError = "Unknown Error"
             if let error = error { completion(.failure(error)) }
             else if let data = data{
                 if let json = (try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])) as? [String:AnyObject] {
                     // try to read out a string array
-                    
                     completion(.success(Model.init(json,persistent)))
+                    return
                 }
-                let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: "Parsing Error"]) as Error
-                completion(.failure(error))
-            }else {
-                let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: "Unknown Error"]) as Error
-                completion(.failure(error))
+                genericError = "Parsing Error"
             }
+            let error = NSError(domain:"", code:404, userInfo:[ NSLocalizedDescriptionKey: genericError]) as Error
+            completion(.failure(error))
         }.resume()
     }
 }
 
-extension Categories: Fetchable {
-    static var apiBase: String { return "b/5f3b6155b88c04101cf62ba5" }
-}
 
-protocol JSONINitializer {
-    init(_ json:Dictionary<String, Any>,_ persistent: StoreDataLocally)
-}
 
-extension Categories: JSONINitializer{
-    
-}
 
 

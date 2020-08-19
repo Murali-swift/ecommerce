@@ -16,6 +16,7 @@ protocol Presenter: class {
 
 protocol CategoryPresenterProtocol:Presenter {
     func updateCategory(_ categories:[Category])
+    func presentSubCategory(category:Category?,completion:(Category?)->())
 }
 
 
@@ -26,6 +27,10 @@ class CategoryPresenter:CategoryPresenterProtocol {
         viewController?.displayContent(categories: categories)
     }
     
+    func presentSubCategory(category:Category?,completion:(Category?)->()) {
+        completion(category)
+    }
+
     func showError(_ error: Error) {
         viewController?.displayError(message: error)
     }

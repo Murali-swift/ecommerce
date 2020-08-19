@@ -7,8 +7,12 @@
 //
 
 import UIKit
+protocol CategoryCoordinatorDelegate: AnyObject {
+    func ProductCoordinatorDidSelected(id:Int64,coordinator: CategoryCoordinator)
+}
 
 class CategoryCoordinator: Coordinator {
+    weak var delegate: CategoryCoordinatorDelegate?
     weak var parentCoordinator: MainCoordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
@@ -26,5 +30,11 @@ class CategoryCoordinator: Coordinator {
     func start() {
         categoryViewController.coordinator = self
         navigationController.setViewControllers([categoryViewController], animated: false)
+    }
+}
+
+extension CategoryCoordinator {
+    func productDidSelected (_ forCategoryId:Int64){
+        delegate?.ProductCoordinatorDidSelected(id: forCategoryId, coordinator: self)
     }
 }

@@ -14,13 +14,36 @@
                     <view key="view" contentMode="scaleToFill" id="xA0-11-jbn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3h-7U-Ogn">
+                                <rect key="frame" x="161" y="74" width="92" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0sj-jd-k69">
+                                <rect key="frame" x="0.0" y="115" width="414" height="747"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0sj-jd-k69" firstAttribute="top" secondItem="O3h-7U-Ogn" secondAttribute="bottom" constant="20" id="CDc-xA-BG9"/>
+                            <constraint firstItem="0sj-jd-k69" firstAttribute="leading" secondItem="5h1-nZ-DeD" secondAttribute="leading" id="DJJ-zb-42j"/>
+                            <constraint firstItem="O3h-7U-Ogn" firstAttribute="top" secondItem="5h1-nZ-DeD" secondAttribute="top" constant="30" id="Dcq-JQ-jxt"/>
+                            <constraint firstItem="0sj-jd-k69" firstAttribute="trailing" secondItem="5h1-nZ-DeD" secondAttribute="trailing" id="Kax-z0-rtG"/>
+                            <constraint firstItem="O3h-7U-Ogn" firstAttribute="centerX" secondItem="xA0-11-jbn" secondAttribute="centerX" id="ZvW-yi-sSO"/>
+                            <constraint firstItem="5h1-nZ-DeD" firstAttribute="bottom" secondItem="0sj-jd-k69" secondAttribute="bottom" id="ezE-Z2-HXv"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="5h1-nZ-DeD"/>
                     </view>
+                    <connections>
+                        <outlet property="categoryTableView" destination="0sj-jd-k69" id="58Q-14-tj4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKl-ZA-U4T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="468" y="-136"/>
+            <point key="canvasLocation" x="466.66666666666669" y="-136.60714285714286"/>
         </scene>
     </scenes>
 </document>

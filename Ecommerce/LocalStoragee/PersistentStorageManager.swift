@@ -70,7 +70,11 @@ extension PersistenceStorageManager:StoreDataLocally {
                 tax.value = productItem.tax?.value ?? 0.0
                 product.tax = tax
                 categories.addToProducts(product)
-
+            }
+            for id in categoryItem.child_categories {
+                let child = ChildCategory(context: context)
+                child.ids = Int64(id)
+                categories.addToSubCategories(child)
             }
         }
     }
@@ -98,6 +102,6 @@ extension PersistenceStorageManager:StoreDataLocally {
                 }
             }
         }
-        try? context.save()
+//        try? context.save()
     }
 }

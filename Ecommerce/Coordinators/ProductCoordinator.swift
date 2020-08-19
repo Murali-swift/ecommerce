@@ -7,15 +7,17 @@
 //
 import UIKit
 
+
 class ProductCoordinator: Coordinator {
     weak var parentCoordinator: MainCoordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-
+    private var categoryID: Int64
     let productViewController = ProductViewController.storyboardViewController()
 
-    init(navigationController: UINavigationController ) {
+    init(categoryID: Int64, navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.categoryID = categoryID
     }
 
     deinit {
@@ -24,6 +26,7 @@ class ProductCoordinator: Coordinator {
 
     func start() {
         productViewController.coordinator = self
-        navigationController.setViewControllers([productViewController], animated: false)
+        navigationController.pushViewController(productViewController, animated: true)
+//        navigationController.setViewControllers([productViewController], animated: false)
     }
 }

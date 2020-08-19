@@ -8,59 +8,27 @@
 
 import UIKit
 
-struct Constants {
-    static let loadingViewTag = 100
-    static let baseURLString = "https://api.jsonbin.io"
-}
-
-protocol DisplayLogicProtocol: class{
-    func displayError(message: Error)
-    func displayLoading()
-    func removeLoading()
-}
-
 protocol CategoryDisplayProtocol: DisplayLogicProtocol{
     func displayContent(categories: [Category])
 }
 
-extension DisplayLogicProtocol where Self: UIViewController {
-    func displayLoading() {
-        let loadingView = LoadingView()
-        view.addSubview(loadingView)
-        
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingView.animate()
-        loadingView.tag = Constants.loadingViewTag
-    }
-    
-    func removeLoading() {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.subviews.forEach { subview in
-                if subview.tag == Constants.loadingViewTag {
-                    subview.removeFromSuperview()
-                }
-            }
-        }
-    }
-}
 
 class CategoryViewController: UIViewController {
     weak var coordinator: CategoryCoordinator?
     var interactor: CategoryInteractorProtocol?
 
-
+    @IBOutlet weak var categoryTableView: UITableView!
+    private var categories: [Category] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         setup()
         loadCategory()
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
     
     private func setup() {
         let viewController = self
@@ -69,10 +37,19 @@ class CategoryViewController: UIViewController {
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
+        
+        self.setupTableView()
+    }
+    
+    private func setupTableView() {
+        categoryTableView.register(CategoryTableViewCell.nib(), forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        categoryTableView.delegate = self
+        categoryTableView.dataSource = self
+        categoryTableView.tableFooterView = UIView()
     }
     
     private func loadCategory(){
-        interactor?.fetchCategory()
+        interactor?.fetchMainCategory()
     }
     /*
     // MARK: - Navigation
@@ -86,12 +63,53 @@ class CategoryViewController: UIViewController {
 
 }
 
-extension CategoryViewController: CategoryDisplayProtocol {
-    func displayContent(categories: [Category]) {
-        
+extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories[section].subCategories?.count ?? 0
     }
     
-    func displayError(message: Error) {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return categories.count
+    }
+    
+    func tableView(_ tableView: UITableView,heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier) as? CategoryTableViewCell  else {
+            return UIView()
+        }
+        cell.backgroundColor = .lightGray
+        cell.textLabel?.text = categories[section].name
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier, for: indexPath) as? CategoryTableViewCell  else {
+            return UITableViewCell()
+        }
+
+        cell.textLabel?.text = ""
+        interactor?.fetchSubCategory(mainCategory: categories[indexPath.section], forIndexPath: indexPath, completion: { (subCategory) in
+            cell.textLabel?.text = subCategory?.name
+        })
         
+        cell.backgroundColor = .white
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        coordinator?.productDidSelected(categories[indexPath.row].id)
     }
 }
+
+extension CategoryViewController: CategoryDisplayProtocol {
+    func displayContent(categories: [Category]) {
+        self.categories = categories
+        DispatchQueue.main.async { [weak self] in
+            self?.categoryTableView.reloadData()
+        }
+    }
+}
+

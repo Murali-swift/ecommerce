@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol JSONINitializer {
+    init(_ json:Dictionary<String, Any>,_ persistent: StoreDataLocally)
+}
+
 struct Categories {
    private var category: [CategorySub] = []
    private var rankings: [Rankings] = []
@@ -106,4 +110,13 @@ struct CategorySub {
             }
         }
     }
+}
+
+
+extension Categories: Fetchable {
+    static var apiBase: String { return "b/5f3b6155b88c04101cf62ba5" }
+}
+
+extension Categories: JSONINitializer{
+    
 }
