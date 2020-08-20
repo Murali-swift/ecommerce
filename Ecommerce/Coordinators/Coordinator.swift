@@ -3,7 +3,7 @@
 //  SpotiJ
 //
 //  Created by Murali on 14.06.20.
-//  Copyright © 20wo Murali. All rights reserved.
+//  Copyright © 2020 Murali. All rights reserved.
 //
 import UIKit
 
