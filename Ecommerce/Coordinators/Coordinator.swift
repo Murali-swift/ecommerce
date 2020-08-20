@@ -2,8 +2,8 @@
 //  Coordinator.swift
 //  SpotiJ
 //
-//  Created by Jonathan Ramirez on 14.06.19.
-//  Copyright © 2019 HeadworkGames. All rights reserved.
+//  Created by Murali on 14.06.20.
+//  Copyright © 20wo Murali. All rights reserved.
 //
 import UIKit
 
