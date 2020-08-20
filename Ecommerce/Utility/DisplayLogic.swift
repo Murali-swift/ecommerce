@@ -13,6 +13,7 @@ protocol DisplayLogicProtocol: class{
     func displayError(message: Error)
     func displayLoading()
     func removeLoading()
+    func displaySuccessMessage(message: String)
 }
 
 extension UIViewController: DisplayLogicProtocol {
@@ -43,6 +44,19 @@ extension UIViewController: DisplayLogicProtocol {
         DispatchQueue.main.async { [weak self] in
             let alert = UIAlertController(title: "ERROR",
                                           message: message.localizedDescription,
+                                          preferredStyle: .alert)
+            let alertOKAction=UIAlertAction(title:"OK", style: UIAlertAction.Style.default, handler: { action in
+            })
+        
+            alert.addAction(alertOKAction)
+            self?.present(alert, animated: true, completion:nil)
+        }
+    }
+    
+    func displaySuccessMessage(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(title: "SUCCESS",
+                                          message: message,
                                           preferredStyle: .alert)
             let alertOKAction=UIAlertAction(title:"OK", style: UIAlertAction.Style.default, handler: { action in
             })

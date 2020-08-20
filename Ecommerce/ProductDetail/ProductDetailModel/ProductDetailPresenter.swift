@@ -10,6 +10,9 @@ import Foundation
 
 protocol ProductDetailPresenterProtocol:ErrorPresenter {
     func showProductDetail(_ forProduct :Products)
+    func showVariant(selectedID:Int64,variants:  [Variants])
+    func successfullyAddedToCart()
+    func proceedWithPayment(_ defaultError: Error)
 }
 
 
@@ -23,5 +26,16 @@ class ProductDetailPresenter: ProductDetailPresenterProtocol {
     func showProductDetail(_ forProduct :Products) {
         viewController?.displayProductDetail(forProduct)
     }
+    
+    func showVariant(selectedID:Int64,variants: [Variants]) {
+        viewController?.updateVariantUI(selectedID: selectedID, variants: variants)
+    }
 
+    func successfullyAddedToCart() {
+        viewController?.displaySuccessMessage(message: "Added To Cart")
+    }
+    
+    func proceedWithPayment(_ defaultError: Error){
+        viewController?.displayError(message: defaultError)
+    }
 }

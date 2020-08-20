@@ -21,6 +21,8 @@ typealias Presenter = ErrorPresenter & LoaderPresenter
 
 protocol CategoryPresenterProtocol:Presenter {
     func updateCategory(_ categories:[Category])
+    func updateMainCategory(_ categories:[String])
+    func updateDefaultMainCategory(_ title: String)
     func presentSubCategory(category:Category?,completion:(Category?)->())
 }
 
@@ -30,6 +32,14 @@ class CategoryPresenter:CategoryPresenterProtocol {
 
     func updateCategory(_ categories: [Category]) {
         viewController?.displayContent(categories: categories)
+    }
+
+    func updateMainCategory(_ categories:[String]) {
+        viewController?.displayMainContent(categories)
+    }
+    
+    func updateDefaultMainCategory(_ title: String) {
+        viewController?.displayDefaultCategory(title)
     }
     
     func presentSubCategory(category:Category?,completion:(Category?)->()) {

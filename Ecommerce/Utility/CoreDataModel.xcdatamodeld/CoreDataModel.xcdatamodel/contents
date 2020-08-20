@@ -14,9 +14,12 @@
         <attribute name="date_added" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" spotlightIndexingEnabled="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="orderCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shareCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="viewCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="products" inverseEntity="Category"/>
         <relationship name="tax" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tax" inverseName="product" inverseEntity="Tax"/>
-        <relationship name="variant" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Variants" inverseName="product" inverseEntity="Variants"/>
+        <relationship name="variant" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Variants" inverseName="product" inverseEntity="Variants"/>
     </entity>
     <entity name="ProductsOrderType" representedClassName=".ProductsOrderType" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -25,12 +28,12 @@
     </entity>
     <entity name="ProductsShareType" representedClassName=".ProductsShareType" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="view_count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="shares" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ranking" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ranking" inverseName="shareType" inverseEntity="Ranking"/>
     </entity>
     <entity name="ProductsViewType" representedClassName=".ProductsViewType" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="shares" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="viewCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ranking" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ranking" inverseName="viewType" inverseEntity="Ranking"/>
     </entity>
     <entity name="Ranking" representedClassName=".Ranking" syncable="YES">
@@ -54,7 +57,7 @@
     <elements>
         <element name="Category" positionX="146.1015625" positionY="-36.80859375" width="153.9921875" height="103"/>
         <element name="ChildCategory" positionX="129.8828125" positionY="196.3359375" width="128" height="73"/>
-        <element name="Products" positionX="458.79296875" positionY="-101.421875" width="128" height="133"/>
+        <element name="Products" positionX="458.79296875" positionY="-101.421875" width="128" height="178"/>
         <element name="ProductsOrderType" positionX="70.1171875" positionY="374.22265625" width="128" height="88"/>
         <element name="ProductsShareType" positionX="567.59765625" positionY="446.71875" width="128" height="88"/>
         <element name="ProductsViewType" positionX="233.76953125" positionY="470.25390625" width="128" height="88"/>

@@ -9,29 +9,29 @@
 import Foundation
 
 protocol ProductInteractorProtocol {
-    func fetchProductForCategory(id: Int64)
     func fetchProductForCategory(id: Int64, filter:String?)
     func titleForCategory(id:Int64)
+    func fetchRankingFilter()
 }
 
 class  ProductInteractor: ProductInteractorProtocol {
     var presenter: ProductPresenterProtocol?
 
     func titleForCategory(id:Int64) {
-        presenter?.updateTitle(LocalProductWorker(categoryID: id).title())
+        presenter?.updateTitle(LocalProductWorker().title(categoryID: id))
     }
     
-    func fetchProductForCategory(id: Int64) {
-        presenter?.updateProduct(LocalProductWorker(categoryID: id).fetch())
-    }
-    
-    func fetchProductForCategory(id: Int64, filter:String?) {
-        if filter?.isEmpty ?? true || filter == "All" {
-            self.fetchProductForCategory(id: id)
+    func fetchProductForCategory(id: Int64, filter:String? = "All") {
+        if filter?.isEmpty ?? true{
+            presenter?.updateProduct(LocalProductWorker().fetchProducts(categoryID: id))
         }else {
-            
+            presenter?.updateProduct(LocalProductWorker().fetchProductsInSorted(categoryID: id, forName: filter!))
 //            presenter?.updateProduct(products)
         }
+    }
+    
+    func fetchRankingFilter() {
+        presenter?.updateFilter(LocalProductWorker().fetchFilter())
     }
     
 

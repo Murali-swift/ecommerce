@@ -68,7 +68,7 @@ extension PersistenceStorageManager:StoreDataLocally {
                     return variant
                 }
                 if !variants.isEmpty {
-                    product.addToVariant(NSSet.init(array: variants))
+                    product.addToVariant(NSOrderedSet.init(array: variants))
                 }
 
                 let tax = Tax(context: context)
@@ -81,15 +81,21 @@ extension PersistenceStorageManager:StoreDataLocally {
             if !products.isEmpty {
                 categories.addToProducts(NSOrderedSet.init(array: products.compactMap({$0})))
             }
-
-            var childs = [ChildCategory]()
-            for id in categoryItem.child_categories {
+            
+            let childs = categoryItem.child_categories.compactMap { (id) -> ChildCategory in
                 let child = ChildCategory(context: context)
                 child.ids = Int64(id)
-                childs.append(child)
+                return child
             }
+
+//            var childs = [ChildCategory]()
+//            for id in categoryItem.child_categories {
+//                let child = ChildCategory(context: context)
+//                child.ids = Int64(id)
+//                childs.append(child)
+//            }
             if !childs.isEmpty {
-                categories.addToSubCategories(NSSet.init(array: childs.compactMap({$0})))
+                categories.addToSubCategories(NSSet.init(array: childs))
             }
         }
     }
@@ -111,12 +117,12 @@ extension PersistenceStorageManager:StoreDataLocally {
                 }else if let value = subItem.shares {
                     let share = ProductsShareType (context: context)
                     share.id = Int64(subItem.id ?? 0)
-                    share.view_count = Int64(value)
+                    share.shares  = Int64(value)
                     shares.append(share)
                 }else if let value = subItem.view_count {
                     let viewCount = ProductsViewType (context: context)
                     viewCount.id = Int64(subItem.id ?? 0)
-                    viewCount.shares = Int64(value)
+                    viewCount.viewCount = Int64(value)
                     views.append(viewCount)
                 }
             }

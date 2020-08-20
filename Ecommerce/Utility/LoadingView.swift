@@ -8,7 +8,7 @@
 import UIKit
 
 final class LoadingView: UIView {
-    private let activityIndicatorView = UIActivityIndicatorView(style: .white)
+    private let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
     
     override func layoutSubviews() {
         super.layoutSubviews()

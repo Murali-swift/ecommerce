@@ -73,16 +73,17 @@ extension MainCoordinator {
 
     fileprivate func showProductList(_ id: Int64) {
         let productoordinator = ProductCoordinator(categoryID: id, navigationController: navigationController)
+        productoordinator.delegate = self
         productoordinator.parentCoordinator = self
         productoordinator.start()
         childCoordinators.append(productoordinator)
     }
     
     fileprivate func showProductDetail(_ id: Int64) {
-        let productoordinator = ProductCoordinator(categoryID: id, navigationController: navigationController)
-        productoordinator.parentCoordinator = self
-        productoordinator.start()
-        childCoordinators.append(productoordinator)
+        let productDetailCoordinator = ProductDetailCoordinator(productID: id, navigationController: navigationController)
+        productDetailCoordinator.parentCoordinator = self
+        productDetailCoordinator.start()
+        childCoordinators.append(productDetailCoordinator)
     }
 }
 

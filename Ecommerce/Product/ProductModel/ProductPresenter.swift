@@ -11,6 +11,7 @@ import Foundation
 protocol ProductPresenterProtocol:ErrorPresenter {
     func updateProduct(_ product:[Products])
     func updateTitle(_ title:String)
+    func updateFilter(_ ranking:[Ranking])
 }
 
 
@@ -23,6 +24,10 @@ class ProductPresenter:ProductPresenterProtocol {
     
     func updateTitle(_ title:String) {
         viewController?.displayTitle(title)
+    }
+    
+    func updateFilter(_ ranking:[Ranking]) {
+        viewController?.updateFilter(ranking)
     }
     
     func showError(_ error: Error) {

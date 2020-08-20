@@ -43,9 +43,12 @@
                                             <constraint firstAttribute="width" constant="80" id="WxZ-A7-D0o"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="FILTER ▽">
+                                        <state key="normal" title="SORT ▽">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="filter:" destination="EzR-FU-AhU" eventType="touchUpInside" id="daM-Jz-P6Z"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

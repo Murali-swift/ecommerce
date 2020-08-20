@@ -79,7 +79,7 @@ struct CategorySub {
             }
             
             let taxed = [json["tax"]]
-            tax = Taxes.init(taxed)
+            tax = Taxes.init(taxed as Array<Any>)
         }
     }
     

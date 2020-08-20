@@ -14,7 +14,7 @@ protocol Fetchable {
 
 struct Client {
     let session: URLSession
-    let baseURL = URL(string: Constants.baseURLString ?? "")!
+    let baseURL = URL(string: Constants.baseURLString)!
     init(session: URLSession) {
         self.session = session
     }
@@ -36,7 +36,9 @@ extension Client {
             else if let data = data{
                 if let json = (try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])) as? [String:AnyObject] {
                     // try to read out a string array
-                    completion(.success(Model.init(json,persistent)))
+                    DispatchQueue.main.async { 
+                        completion(.success(Model.init(json,persistent)))
+                    }
                     return
                 }
                 genericError = "Parsing Error"

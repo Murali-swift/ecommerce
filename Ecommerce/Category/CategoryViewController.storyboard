@@ -22,23 +22,41 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0sj-jd-k69">
-                                <rect key="frame" x="0.0" y="115" width="414" height="747"/>
+                                <rect key="frame" x="0.0" y="180" width="414" height="682"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dRN-ho-T0S">
+                                <rect key="frame" x="0.0" y="110" width="414" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="nZX-5I-mtF"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="5" id="BdT-Iq-8Wv">
+                                    <size key="itemSize" width="97" height="44"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="0sj-jd-k69" firstAttribute="top" secondItem="O3h-7U-Ogn" secondAttribute="bottom" constant="20" id="CDc-xA-BG9"/>
+                            <constraint firstItem="0sj-jd-k69" firstAttribute="top" secondItem="dRN-ho-T0S" secondAttribute="bottom" constant="10" id="8bq-dn-eJK"/>
                             <constraint firstItem="0sj-jd-k69" firstAttribute="leading" secondItem="5h1-nZ-DeD" secondAttribute="leading" id="DJJ-zb-42j"/>
                             <constraint firstItem="O3h-7U-Ogn" firstAttribute="top" secondItem="5h1-nZ-DeD" secondAttribute="top" constant="30" id="Dcq-JQ-jxt"/>
                             <constraint firstItem="0sj-jd-k69" firstAttribute="trailing" secondItem="5h1-nZ-DeD" secondAttribute="trailing" id="Kax-z0-rtG"/>
                             <constraint firstItem="O3h-7U-Ogn" firstAttribute="centerX" secondItem="xA0-11-jbn" secondAttribute="centerX" id="ZvW-yi-sSO"/>
                             <constraint firstItem="5h1-nZ-DeD" firstAttribute="bottom" secondItem="0sj-jd-k69" secondAttribute="bottom" id="ezE-Z2-HXv"/>
+                            <constraint firstItem="dRN-ho-T0S" firstAttribute="trailing" secondItem="5h1-nZ-DeD" secondAttribute="trailing" id="fNX-ns-113"/>
+                            <constraint firstItem="dRN-ho-T0S" firstAttribute="leading" secondItem="5h1-nZ-DeD" secondAttribute="leading" id="gnr-Lb-IDy"/>
+                            <constraint firstItem="dRN-ho-T0S" firstAttribute="top" secondItem="O3h-7U-Ogn" secondAttribute="bottom" constant="15" id="rZc-os-YKl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5h1-nZ-DeD"/>
                     </view>
                     <connections>
                         <outlet property="categoryTableView" destination="0sj-jd-k69" id="58Q-14-tj4"/>
+                        <outlet property="collectionView" destination="dRN-ho-T0S" id="1JA-X6-Cb7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKl-ZA-U4T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
