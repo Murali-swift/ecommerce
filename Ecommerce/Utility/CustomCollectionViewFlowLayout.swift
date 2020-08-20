@@ -2,8 +2,8 @@
 //  CustomCollectionViewFlowLayout.swift
 //  PTPaniniConsumerExp
 //
-//  Created by ramchandra on 02/02/19.
-//  Copyright © 2019 purpletalk. All rights reserved.
+//  Created by Murali on 20/08/20.
+//  Copyright © 2020 Murali. All rights reserved.
 //
 
 import UIKit
